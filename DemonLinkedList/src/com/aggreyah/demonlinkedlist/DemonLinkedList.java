@@ -56,40 +56,70 @@ class DemonLinkedList<E>{
 	public void add(int index, E element ) 
 	{
 		// TODO: Implement this method
+		// Create a node for the element.
+		LLNode<E> elemNode = new LLNode<>(element);
+		// Find the node at index.
+		LLNode<E> currentNode = this.head;
+		int i = 0;
+		while (i <= index) {
+			currentNode = currentNode.next;
+			i += 1;
+		}
+		elemNode.next = currentNode;
+		elemNode.prev = currentNode.prev;
+		currentNode.prev.next = elemNode;
+		currentNode.prev = elemNode;
+		this.size += 1;
+		
 	}
 	
-//	/** Return the size of the list */
-//	public int size() 
-//	{
-//		// TODO: Implement this method
-//		
-//		return this.size;
-//	}
+	/** Return the size of the list */
+	public int size() 
+	{
+		// TODO: Implement this method
+		
+		return this.size;
+	}
 //
-//	/** Remove a node at the specified index and return its data element.
-//	 * @param index The index of the element to remove
-//	 * @return The data element removed
-//	 * @throws IndexOutOfBoundsException If index is outside the bounds of the list
-//	 * 
-//	 */
-//	public E remove(int index) 
-//	{
-//		// TODO: Implement this method
-//		return null;
-//	}
+	/** Remove a node at the specified index and return its data element.
+	 * @param index The index of the element to remove
+	 * @return The data element removed
+	 * @throws IndexOutOfBoundsException If index is outside the bounds of the list
+	 * 
+	 */
+	public E remove(int index) 
+	{
+		// TODO: Implement this method
+		// Find the node at index.
+		if (index < 0 || index > this.size - 1)
+			throw new IndexOutOfBoundsException("Sorry Soldier that index is overboard");
+		LLNode<E> currentNode = this.head;
+		int i = 0;
+		while (i <= index) {
+			currentNode = currentNode.next;
+			i += 1;
+		}
+		currentNode.prev.next = currentNode.next;
+		currentNode.next.prev = currentNode.prev;
+		currentNode.next = null;
+		currentNode.prev = null;
+		this.size -= 1;
+		return currentNode.data;
+	}
 //
-//	/**
-//	 * Set an index position in the list to a new element
-//	 * @param index The index of the element to change
-//	 * @param element The new element
-//	 * @return The element that was replaced
-//	 * @throws IndexOutOfBoundsException if the index is out of bounds.
-//	 */
-//	public E set(int index, E element) 
-//	{
-//		// TODO: Implement this method
-//		return null;
-//	}
+	/**
+	 * Set an index position in the list to a new element
+	 * @param index The index of the element to change
+	 * @param element The new element
+	 * @return The element that was replaced
+	 * @throws IndexOutOfBoundsException if the index is out of bounds.
+	 */
+	public E set(int index, E element) 
+	{
+		// TODO: Implement this method
+		this.add(index, element);
+		return this.remove(index + 1);
+	}
     public static void main(String [] args) {
         System.out.println("Hello World of Linked Lists!");
         DemonLinkedList<String> myStringLinkedList = new DemonLinkedList<String>();
@@ -105,6 +135,18 @@ class DemonLinkedList<E>{
         System.out.println("At index 0: " + myStringLinkedList.get(0));
         System.out.println("At index 1: " + myStringLinkedList.get(1));
         System.out.println("At index 2: " + myStringLinkedList.get(2));
+        myStringLinkedList.add(0, "Joyce Wambugha");
+        myStringLinkedList.add(3, "Elizabeth Oluande");
+        System.out.println("Set: " + myStringLinkedList.set(3, "Marie Curie"));
+//        System.out.println("Removed: " + myStringLinkedList.remove(3));
+        System.out.println("At index 0: " + myStringLinkedList.get(0));
+        System.out.println("At index 1: " + myStringLinkedList.get(1));
+        System.out.println("At index 2: " + myStringLinkedList.get(2));
+        System.out.println("At index 3: " + myStringLinkedList.get(3));
+        System.out.println("At index 4: " + myStringLinkedList.get(4));
+//        System.out.println("At index 4: " + myStringLinkedList.get(4));
+        
+        
     }
 }
 class LLNode <E> {
